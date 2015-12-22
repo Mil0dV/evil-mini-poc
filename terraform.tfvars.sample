@@ -1,0 +1,3 @@
+access_key = "key"
+secret_key = "key"
+mgt_subnets = "12.34.56.78/32"
