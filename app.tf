@@ -4,7 +4,7 @@ variable "count" {
   default = 2
 }
 
-resource "aws_instance" "ln-app" {
+resource "aws_instance" "app" {
   ami = "${var.app-ami}"
   instance_type = "t2.micro"
   count = "${var.count}"
@@ -19,22 +19,17 @@ resource "aws_instance" "ln-app" {
     user = "ubuntu"
     key_file = "deploy-key"
   }
-  provisioner "file" {
-    source = "app/Dockerfile"
-    destination = "/opt/ln-docker"
-  }
   provisioner "remote-exec" {
     inline = [
-      # Install docker
-      "sudo apt-get update",
-      "sudo apt-get -y install docker.io",
-      # "curl -sSL https://get.docker.com/ubuntu/ | sudo sh",
-      # Provide Redis IP to app
-      "echo ${aws_instance.ln-redis.public_ip} > redis_host",
-      "cat redis_host",
+      /*"sudo apt-get update",*/
+      /*"sudo apt-get -y install docker.io",*/
+      # Provide Rabbitmq IP to app
+      "echo ${aws_instance.rabbitmq.public_ip} > rabbitmq_host",
+      "cat rabbitmq_host",
       # Build container
-      "cd /opt/ln-docker && sudo docker build -t lame/app .",
-      "sudo docker run --name ln-app -t -i lame/app"
+      #"git pull repo"
+      #"cd /opt/docker && sudo docker build -t app .",
+      #"sudo docker run --name app -t -i app"
     ]
   }
 }

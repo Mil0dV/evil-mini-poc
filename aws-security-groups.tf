@@ -1,6 +1,6 @@
 /* Default security group */
 resource "aws_security_group" "default" {
-  name = "LN-SG"
+  name = "POC-SG"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC and "
   vpc_id = "${aws_vpc.default.id}"
 
@@ -26,6 +26,6 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "LN-default-vpc"
+    Name = "POC-default-vpc"
   }
 }
